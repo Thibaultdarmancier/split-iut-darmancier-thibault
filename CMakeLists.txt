@@ -8,15 +8,17 @@ include(FetchContent)
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
+  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 # Obligatoire avec MSVC sous Windows
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 enable_testing()
+include(GoogleTest)
 
 add_executable(tests tests/test_main.cpp)
 target_link_libraries(tests GTest::gtest_main)
-
-include(GoogleTest)
 gtest_discover_tests(tests)
+
+add_subdirectory(benchmark)
